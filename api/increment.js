@@ -1,11 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
-import fetch from 'node-fetch';
+const { createClient } = require('@supabase/supabase-js');
+const fetch = require('node-fetch');
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method === 'POST') {
         const executor_id = req.body.executor_id || "anonymous";
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -32,4 +32,4 @@ export default async function handler(req, res) {
         return res.status(200).json({ data });
     }
     res.status(405).end();
-}
+};
